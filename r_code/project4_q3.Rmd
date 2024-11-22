@@ -1,0 +1,60 @@
+---
+title: "A4_Q3"
+author: "Joohyeok"
+date: "2023-11-15"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(tidyverse)
+
+df=read.table("diamond-red.txt",header=TRUE)
+
+fit1=with(df,lm(Price~Weight*Colour))
+
+result<-summary(fit1)
+
+```
+
+c)
+```{r}
+result$coefficients
+
+```
+
+d)
+```{r}
+ggplot(df,aes(y=Price,x=Weight,colour=Colour))+
+  geom_point(size=3)+
+  labs(x="Weight (in carats)", y="Price")+
+  scale_colour_manual(values=c("darkmagenta","orange"))+
+  theme_bw()+
+  theme(axis.title=element_text(size=20),
+        legend.text=element_text(size=20),
+        legend.title=element_text(size=20))
+
+```
+
+e)
+```{r}
+result
+
+```
+i) H0: beta2=0 vs Ha: beta2 is not equal to 0
+
+ii) From the summary output, test statistic is -1.431
+
+iii) t 1,70
+
+iv) p-value = 0.157
+
+v) Since p-value>0.05, we do not reject Ho. We have no evidence that the overall effect of colour is significant at the 5% level. 
+
+f)
+```{r}
+predict(fit1,data.frame(Weight=1,Colour="I"))
+
+```
+The estimated mean price of a 1 carat diamond of colour I is 8129.93
+
+g) The discrepancy between the overall effect of color being significant and the main effect of color and the interaction term not being significant might be explained by the presence of an interaction effect in the model. This means that the effect of color on price depends on the weight of the diamond. When considering the main effect of color alone, it may not be significant because it does not account for this interaction. However, the overall effect test (which includes the interaction term) captures the combined effect of color and weight, making it significant.

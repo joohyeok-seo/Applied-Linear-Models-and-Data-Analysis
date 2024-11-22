@@ -1,0 +1,109 @@
+---
+title: "A3_Q3"
+author: "Joohyeok"
+date: "2023-10-30"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(tidyverse)
+df = read.table("LOS.txt",header=TRUE)
+
+fit=lm(LOS~age,df)
+
+df = df %>% mutate(Residual=resid(fit),
+                   Fitted=fitted(fit))
+
+ggplot(df,aes(y=LOS,x=age))+
+  geom_point(size=4,colour="orange")+
+  geom_abline(intercept=coef(fit)[1],slope=coef(fit)[2],
+              linewidth=2)+
+  theme_bw()+
+  theme(axis.title=element_text(size=20),
+        axis.text=element_text(size=14))+
+  labs(x="age (in years)",y="LOS (in days)")
+
+ggplot(df,aes(y=Residual,x=Fitted))+
+  geom_point(size=4,colour="orange")+
+  geom_hline(yintercept=0,linewidth=2)+
+  theme_bw()+
+  theme(axis.title=element_text(size=16),
+        axis.text=element_text(size=14))
+
+ggplot(df,aes(sample=Residual))+
+  stat_qq(size=4,colour="orange")+
+  stat_qq_line(linewidth=2)+
+  labs(y="Residual", x="Theoretical Quantile")+
+  theme_bw()+
+  theme(axis.title=element_text(size=16))
+
+ggplot(df,aes(x=Residual))+
+  geom_histogram(fill="orange")+
+  theme_bw()+
+  theme(axis.title=element_text(size=16),
+        axis.text=element_text(size=14))+
+  labs(y="Frequency")
+
+ggplot(df,aes(x=LOS))+
+  geom_histogram(fill="orange")+
+  theme_bw()+
+  theme(axis.title=element_text(size=16),
+        axis.text=element_text(size=14))+
+  labs(y="Frequency")
+
+```
+
+i) Linearity seems reasonable because the residuals vs.fitted values plot does not suggest any trends.
+ii) Common SD seems reasonable because for the residuals vs.fitted values plot, vertical spread is approximately constant over the range of the fitted values.
+iii) Normality is questionable because the Q-Q plot shows a serious departure from the line.
+
+The residuals are right-skewed. 
+Also, the responses are right-skewed.
+So, I recommend that the researcher use logarithm of LOS as the response.
+
+```{r}
+df = df %>% mutate(LogLOS=log(LOS))
+
+fit1=lm(LogLOS~age,df)
+
+df = df %>% mutate(Residual.log=resid(fit1),
+                   Fitted.log=fitted(fit1))
+
+ggplot(df,aes(y=LogLOS,x=age))+
+  geom_point(size=4,colour="orange")+
+  geom_abline(intercept=coef(fit1)[1],slope=coef(fit1)[2],
+              linewidth=2)+
+  theme_bw()+
+  theme(axis.title=element_text(size=20),
+        axis.text=element_text(size=14))+
+  labs(x="age (in years)",y="LOG Length of Stay (in days)")
+
+
+ggplot(df,aes(y=Residual.log,x=Fitted.log))+
+  geom_point(size=4,colour="orange")+
+  geom_hline(yintercept=0,linewidth=2)+
+  labs(y="Residual",x="Fitted")+
+  theme_bw()+
+  theme(axis.title=element_text(size=16),
+        axis.text=element_text(size=14))
+
+#Create the normal quantile plot of the residuals:
+ggplot(df,aes(sample=Residual.log))+
+  stat_qq(size=4,colour="orange")+
+  stat_qq_line(linewidth=2)+
+  labs(y="Residual", x="Theoretical Quantile")+
+  theme_bw()+
+  theme(axis.title=element_text(size=16))
+
+```
+
+i) Linearity seems reasonable because the residuals vs. fitted values plot does not suggest any trends.
+ii) Common SD seems reasonable because for the residuals vs. fitted values plot, vertical spread is approximately constant over the range of the fitted values.
+iii) Normality is much closer to reasonable because for the Q-Q plot, minor departures from the line are likely not serious. 
+
+```{r}
+pi=predict(fit1,newdata=data.frame(age=40),interval="prediction",level=0.95)
+pi
+exp(pi)
+```
+b) Using the model with logarithm of LOS as the response, a 95% prediction interval for the LOS of a 40 year old patient is (0.513, 7.589).

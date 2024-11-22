@@ -1,0 +1,56 @@
+---
+title: "Q1"
+author: "Joohyeok"
+date: "2023-10-04"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(ggplot2)
+
+df = read.table("IQ.txt",header=TRUE)
+
+lm_model <- lm(IQ ~ birthweight, df)
+
+result <- summary(lm_model)
+result
+```
+
+a) (i) Let beta1 be the effect of birthweight in the model. Then H0: beta1=0 vs Ha: beta1>0.
+
+   (ii) If H0 is true, then t is a random draw from a t136 distribution
+   
+   (iii) t= 2.286 (from the summary output)
+   
+```{r}
+1-pt(2.286,136)
+```
+   (iv) p-value = 0.0119
+   
+   (v) Since p-value>0.01, we do not reject the null hypothesis. We have no evidence at the 1% level that children with higher birthweight (within the population of children born with very low birthweights) have higher IQs.
+   
+b) y = 87.0157 + 0.008974x
+
+c) It means that the IQ at the age of 5 is lower than other children of the same birthweight.
+In short, the IQ at 5 of child #127 is smaller than predicted value.
+
+```{r}
+predict(lm_model,newdata=data.frame(birthweight=750),interval="prediction",level=0.99)
+
+```
+d) a 99% point prediction of the IQ of a baby with a birthweight of 750g is 93.75
+
+e) a 99% prediction interval for the IQ of a baby with a birthweight of 750g is (60.64,126.85).
+
+f) The CI is narrower because we have more information about the mean IQ at 5 of babies with birthweights of 750g (a parameter) than about the IQ at 5 of a baby with birthweight of 750g (a random variable). The latter is inherently more variable than an average of such random variables..
+
+g) The width of the prediction interval is mainly determined by standard error of the least squares estimator of beta1. Referring to Q4(c) of assignment1, the variance (and therefore likely the estimated variance of the least squares estimator of beta1) decrease with increasing the sample size and increasing the values of the xi's in the sample. Therefore, to achieve a narrower prediction interval, he could use a bigger sample and a wider range of birthweight. 
+
+```{r}
+mean(predict(lm_model,newdata=data.frame(birthweight=750),interval="prediction",level=0.99))
+newdata=data.frame(birthweight=750)
+newdata
+mean(df$IQ,newdata=data.frame(birthweight=750))
+```
+h) The estimated mean IQ of a baby with a birthweight of 750g is 95.8
+

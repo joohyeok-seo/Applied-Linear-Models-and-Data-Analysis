@@ -1,0 +1,38 @@
+---
+title: "A4_Q1"
+author: "Joohyeok"
+date: "2023-11-08"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(car)
+library(corrplot)
+
+df=read.table("concrete.txt", header=TRUE)
+
+fit=lm(CompressiveStrength~Cement+Slag+FlyAsh+Water+SP+CoarseAggr+FineAggr,df)
+
+summary(fit)
+
+vif(fit)
+
+```
+a) This shows severe multicollinearity because most VIFs are greater than 10.
+
+b) In a data analysis, severe multicollinearity can cause instability in the parameter estimates, their standard errors, and p-values.
+
+```{r}
+cc<-cor(df)
+corrplot(cc)
+
+fit1=lm(CompressiveStrength~Cement+Slag+FlyAsh+Water+SP+FineAggr,df)
+
+vif(fit1)
+
+```
+
+c) The correlation between water and coarse aggregates is the highest. So, I suggest excluding coarse aggregates variable then we can avoid problems with multicollinearity because The VIFs are all less than 5.
+
+
+

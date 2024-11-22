@@ -1,0 +1,50 @@
+---
+title: "Q4"
+author: "Joohyeok"
+date: "2023-10-09"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(ggplot2)
+
+df=read.csv("nitro.csv", header=TRUE)
+
+fit=lm(Nitrogen~Inter.Time,df)
+summary(fit)
+
+ggplot(df,aes(y=Nitrogen,x=Inter.Time))+
+  geom_point(colour="orange")+
+  geom_smooth(method = 'lm', se = F)+
+  theme_bw()+
+  theme(axis.title=element_text(size=12))+
+  labs(x="Inter.Time", y="Nitrogen")
+
+df$Residual=resid(fit)
+
+ggplot(df,aes(x=Inter.Time,y=Residual))+
+  geom_point(colour="slateblue",size=2)+
+  labs(y="Residual",x="Inter.Time")+
+  theme_bw()+
+  theme(axis.title=element_text(size=12))+
+  geom_hline(yintercept=0,size=1)
+       
+ggplot(df,aes(sample=Residual))+
+  stat_qq(size=2,colour="slateblue")+
+  stat_qq_line(size=1)+
+  labs(y="Residual",x="Theoretical Quantiles")+
+  theme_bw()+
+  theme(axis.title=element_text(size=12))
+
+```
+
+i) The residuals vs. fitted values plot shows no suggestion of a trend; mean 0 assumption. Therefore, seems reasonable.
+
+ii) The assumption that the errors have common variance seems reasonable here because from the plot of residual vs inter.time, the vertical spread of the residual is relatively constant.
+
+iii) The Q-Q plot shows no systematic deviations from a straight line, suggesting that the normality assumption is reasonable.
+
+
+
+
+

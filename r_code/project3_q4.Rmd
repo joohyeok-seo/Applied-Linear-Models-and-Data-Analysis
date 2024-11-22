@@ -1,0 +1,47 @@
+---
+title: "A3_Q4"
+author: "Joohyeok"
+date: "2023-10-21"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(ggplot2)
+library(tidyverse)
+library(GGally)
+library(plotly)
+library(reshape2)
+
+df=read.csv("tortoise.csv", header=TRUE)
+
+fit=lm(Eggs~Length+Weight,df)
+
+ggpairs(df,columns=c("Length","Weight","Eggs"))+
+  theme_bw()+
+  theme(strip.text=element_text(size=12))
+
+
+```
+
+c) The number of eggs and Length of carapace appear to have a negative correlation. And also, the number of eggs and Wieght of carapace appear to have a negative correlation.
+
+```{r}
+confint(fit,parm="Length",level=0.95)
+```
+d) A 95% CI for the effect of length is (-0.2891,-0.0538)
+
+```{r}
+summary(fit)
+```
+e) From the summary output, R^2 = 0.6145, meaning that 61.5% of the observed variation in number of eggs is explained by variation in lengths and weights.
+
+```{r}
+fit1=lm(Eggs~Length,df)
+
+summary(fit1)
+
+```
+f) The test of simple linear regression is about linear relationship between mean number of eggs and length. In contrast, the test of multiple linear regression is the test of whether any additional variation in number of eggs can be explained by variation in length after having accounted for the variation explained by weight. These tests are therefore of fundamentally different effects (non-adjusted vs. adjusted). The difference in the conclusions is a result of the high correlation between length and weight (they contain similar information about number of eggs)
+
+
+

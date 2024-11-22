@@ -1,0 +1,61 @@
+---
+title: "A1_Q3"
+author: "Joohyeok"
+date: "2023-09-26"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(ggplot2)
+
+df = read.table("IQ.txt",header=TRUE)
+
+lm_model <- lm(formula = IQ ~ birthweight, data = df)
+lm_model
+
+result <- summary(lm_model)
+result
+
+#Q3_c)
+result$coefficients
+
+#Q3_d)
+ggplot(df,aes(y=IQ,x=birthweight))+
+  geom_point(colour="orange")+
+  geom_smooth(method = 'lm', se = F)+
+  theme_bw()+
+  theme(axis.title=element_text(size=12))+
+  labs(x="Birthweight (g)", y="IQ")
+
+#Q3_e)
+# A 99% CI for the effect of birthweight, beta1, is (-0.00128,0.01923)
+
+confint(lm_model,parm="birthweight",level=0.99)
+
+#Q3_f)
+# If we were to repeat this study an infinite number of times, each time selecting 138 babies born at a medical centre, 99% of the 99% CIs that we created would contain beta1.
+
+#Q3_g)
+# A 99% CI for mean IQ of babies with a birthweight of 750g is (90.094,97.399)
+predict(lm_model,newdata=data.frame(birthweight=750),interval="confidence",level=0.99)
+
+#Q3_h)
+# If we were to repeat this study an infinite number of times, each time selecting 138 babies born at a medical centre, 99% of the 99% CIs that we created would contain the mean IQ of babies with a birthweight of 750g.
+
+#Q3_i)
+# If birthweight is not normally distributed, it may have some effect on the validity of the reasoning made in (e) and (g). This is because the assumptions of linear regression equations derived from the analysis include the normality, equal variance, and independence of error term. When this assumption is out of line, the inferred result can lead to biased results, so it is unreliable and the inference can not be said to be valid.
+
+#Q3_j)
+# In terms of the way the data were collected, birthweight is a random variable.
+
+#Q3_k)
+# In model in (a), birthweight is treated as a fixed variable.
+
+#Q3_l)
+# No. In the simple linear regression model, the response is modeled conditional on the predictor variable. Therefore, it is the same regardless of whether the predictor is fixed or random.
+
+
+
+
+```
+

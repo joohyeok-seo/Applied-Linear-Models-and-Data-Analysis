@@ -1,0 +1,8 @@
+---
+title: "Q2"
+author: "Joohyeok"
+date: "2023-10-10"
+output: html_document
+---
+
+Q2) The residuals vs. predictor plot should have points based on y=0 but this plot does not. Since this plot is an increasing graph ignoring the y=0 line, this plot could never result from fitting a simple linear regression model using the method of least squares. 

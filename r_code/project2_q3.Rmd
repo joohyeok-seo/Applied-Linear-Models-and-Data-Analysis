@@ -1,0 +1,19 @@
+---
+title: "Q3"
+author: "Joohyeok"
+date: "2023-10-10"
+output: html_document
+---
+
+a) Longitudinal Data: In this scenario, the data involves collecting information on epilepsy patients over a 1-year period. Patients are recruited from multiple medical centers, and the key variable of interest is the number of seizures they experience over time. Longitudinal data involves repeated measurements on the same subjects (in this case, patients) over a period of time. Researchers are interested in observing changes within individuals (seizure frequency) over the course of the study, which is a characteristic of longitudinal data.
+
+b) Time series Data: In this scenario, the researcher is studying the relationship between the weekly number of malaria patients and the average weekly level of mosquitoes. The data is collected at regular intervals (weekly) over time, making it a time series. Time series data focuses on observing changes in a variable over sequential time periods.
+
+c) Clustered Data: The data involves SFU students participating in an E-reader study, where each student uses one of four types of light filters. The data is clustered because students are grouped based on the type of filter they use. This grouping or clustering can introduce dependence among observations within the same cluster, which needs to be considered in the analysis.
+
+d) Clustered Data: Starbucks monitors daily sales of pumpkin spice lattes at 120 different locations, and each location displays one of three different promotional posters. The data is clustered because sales are grouped by location, and different promotional posters are applied within each cluster. Similar to scenario (c), this clustering introduces potential dependence among sales within the same location.
+
+
+
+
+

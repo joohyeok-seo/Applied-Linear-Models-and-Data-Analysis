@@ -1,0 +1,49 @@
+---
+title: "A4_Q2"
+author: "Joohyeok"
+date: "2023-11-08"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(tidyverse)
+
+df=read.table("depression.txt",header=TRUE)
+fit=lm(Depression~BMI+I(BMI^2),df)
+result <- summary(fit)
+
+```
+
+c)
+```{r}
+result$coefficients
+
+```
+
+d) From the summary output, R^2 is 0.03649. The deterministic part of the model (the quadratic polynomial of BMI) explains 3.65% of the observed variability in depression score.
+```{r}
+result
+
+```
+
+e)
+```{r}
+ggplot(df,aes(x=BMI,y=Depression))+
+  geom_point(size=3,colour="hotpink")+
+  stat_smooth(method="lm",se=FALSE, formula=y~poly(x,2,raw=TRUE),
+              colour="black",size=2)+
+  labs(y="depression score", x="BMI")+
+  theme_bw()+
+  theme(axis.title=element_text(size=16))
+
+```
+
+f) i) H0: beta2=0 vs. Ha: beta2 is not equal to 0
+
+ii) The value of the test statistic(from the summary output) is t = 7.366
+
+iii) p-value = 2.82e-13 (from the output)
+
+iv) Since p-value<0.01, we reject H0. We have evidence at the 1% level that depression is more serious in children who are underweight or overweight.
+
+

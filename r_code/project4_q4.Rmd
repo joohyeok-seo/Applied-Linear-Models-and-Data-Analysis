@@ -1,0 +1,37 @@
+---
+title: "A4_Q4"
+author: "Joohyeok"
+date: "2023-11-15"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+library(tidyverse)
+
+df=read.table("pepper.txt",header=TRUE)
+
+df = df %>% mutate(Type=factor(Type))
+
+contrasts(df$Type)
+
+ggplot(df,aes(y=Spiciness,x=Type))+
+  geom_boxplot(colour=c("orange","chartreuse4","darkmagenta","yellow"),size=1)+
+  labs(y="Spiciness (in Scoville heat unit)", x="Types")+
+  theme_bw()+
+  theme(axis.title=element_text(size=20),axis.text=element_text(size=20))
+
+fit=lm(Spiciness~Type,df)
+
+predict(fit,data.frame(Type = 'Serrano'))
+
+```
+b) The estimated mean spiciness of Serrano peppers is 23120.7
+
+```{r}
+summary(fit)
+
+anova(fit)
+
+```
+c) P-value is very low (p-value < 0.05). Since p-value < 0.05, we reject the null hypothesis. We have evidence at the 5% level that spiciness varies by type of pepper. Therefore, the types of peppers have a significant impact on spiciness.
+
