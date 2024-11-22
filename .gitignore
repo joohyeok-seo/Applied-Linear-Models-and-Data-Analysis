@@ -47,3 +47,30 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+
+
+# R-related files
+.Rhistory
+.RData
+.Rproj.user/
+.Rproj
+*.Rout
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+
+# Large or sensitive data files (optional)
+*.csv
+*.xlsx
+*.sav
+*.dta
+
+# IDE specific
+.vscode/
+.idea/
