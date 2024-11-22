@@ -86,6 +86,8 @@ All R Markdown files for analysis are located in the [`r_code/`](./r_code/) fold
 - [`project4_q2.Rmd`](./r_code/project4_q2.Rmd)
 - [`project4_q3.Rmd`](./r_code/project4_q3.Rmd)
 - [`project4_q4.Rmd`](./r_code/project4_q4.Rmd)
+  
+---
 
 ### **2. Project Reports**
 All solution reports are located in the [`solutions/`](./solutions/) folder:
